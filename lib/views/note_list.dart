@@ -47,22 +47,30 @@ class NoteList extends StatelessWidget {
           color: Colors.grey,
         ),
         itemBuilder: (_, index) {
-          return ListTile(
-            title: Text(
-              notes[index].noteTitle,
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-            subtitle: Text(
-                'Last edited on ${formatDateTime(notes[index].lastEditDateTime)}'),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => NoteModify(
-                    noteID: notes[index].noteID,
-                  ),
-                ),
-              );
+          return Dismissible(
+            key: ValueKey(notes[index].noteID),
+            direction: DismissDirection.startToEnd,
+            onDismissed: (direction) {},
+            confirmDismiss: (direction) {
+
             },
+            child: (ListTile(
+              title: Text(
+                notes[index].noteTitle,
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+              subtitle: Text(
+                  'Last edited on ${formatDateTime(notes[index].lastEditDateTime)}'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => NoteModify(
+                      noteID: notes[index].noteID,
+                    ),
+                  ),
+                );
+              },
+            )),
           );
         },
         itemCount: notes.length,
