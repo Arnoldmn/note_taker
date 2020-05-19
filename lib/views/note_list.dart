@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:notetaker/models/note_for_listing.dart';
+import 'package:notetaker/views/note_modify.dart';
 
 class NoteList extends StatelessWidget {
-
   final notes = [
     new NoteForListing(
         noteID: '1',
         createdDateTime: DateTime.now(),
         lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 1'
-    ),
+        noteTitle: 'Note 1'),
     new NoteForListing(
         noteID: '2',
         createdDateTime: DateTime.now(),
         lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 2'
-    ),
+        noteTitle: 'Note 2'),
     new NoteForListing(
         noteID: '3',
         createdDateTime: DateTime.now(),
         lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 3'
-    ),
+        noteTitle: 'Note 3'),
   ];
-String formatDateTime(DateTime dateTime){
-  return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
-}
+
+  String formatDateTime(DateTime dateTime) {
+    return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,26 +32,31 @@ String formatDateTime(DateTime dateTime){
         title: Text('List of notes'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => NoteModify(),
+            ),
+          );
+        },
         child: Icon(Icons.add),
       ),
       body: ListView.separated(
-        separatorBuilder: (_, __) =>
-            Divider(
-              height: 1,
-              color: Colors.grey,
-            ),
+        separatorBuilder: (_, __) => Divider(
+          height: 1,
+          color: Colors.grey,
+        ),
         itemBuilder: (_, index) {
           return ListTile(
             title: Text(
               notes[index].noteTitle,
-              style: TextStyle(color: Theme
-                  .of(context)
-                  .primaryColor),
+              style: TextStyle(color: Theme.of(context).primaryColor),
             ),
-            subtitle: Text('Last edited on ${formatDateTime(notes[index].lastEditDateTime)}'),
+            subtitle: Text(
+                'Last edited on ${formatDateTime(notes[index].lastEditDateTime)}'),
           );
-        }, itemCount: notes.length,
+        },
+        itemCount: notes.length,
       ),
     );
   }
