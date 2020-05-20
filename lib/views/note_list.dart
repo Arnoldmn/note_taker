@@ -1,30 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:notetaker/models/note_for_listing.dart';
+import 'package:notetaker/services/note_service.dart';
 import 'package:notetaker/views/note_delete.dart';
 import 'package:notetaker/views/note_modify.dart';
 
-class NoteList extends StatelessWidget {
-  final notes = [
-    new NoteForListing(
-        noteID: '1',
-        createdDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 1'),
-    new NoteForListing(
-        noteID: '2',
-        createdDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 2'),
-    new NoteForListing(
-        noteID: '3',
-        createdDateTime: DateTime.now(),
-        lastEditDateTime: DateTime.now(),
-        noteTitle: 'Note 3'),
-  ];
+class NoteList extends StatefulWidget {
+//  final service = NoteService();
+  @override
+  _NoteListState createState() => _NoteListState();
+}
+
+class _NoteListState extends State<NoteList> {
+  NoteService get service => GetIt.I<NoteService>();
+
+  List<NoteForListing> notes = [];
 
   String formatDateTime(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+
+  @override
+  void initState() {
+    notes = service.getNotesList();
+    super.initState();
   }
 
   @override
