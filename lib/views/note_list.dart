@@ -45,7 +45,7 @@ class _NoteListState extends State<NoteList> {
       ),
       body: ListView.separated(
         separatorBuilder: (_, __) => Divider(
-          height: 1,
+          height: 2,
           color: Colors.grey,
         ),
         itemBuilder: (_, index) {

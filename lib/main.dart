@@ -10,6 +10,7 @@ void setupLocator() {
 }
 
 void main() {
+  setupLocator();
   runApp(MyApp());
 }
 
