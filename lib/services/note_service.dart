@@ -17,7 +17,7 @@ class NoteService {
           final note = NoteForListing(
             noteID: item['noteID'],
             noteTitle: item['noteTitle'],
-            createDateTime: DateTime.parse(item['createdDateTiime']),
+            createDateTime: DateTime.parse(item['createDateTime']),
             lastEditDateTime: item['latestEditDateTime'] != null
                 ? DateTime.parse(item['latestEditDateTime'])
                 : null,
