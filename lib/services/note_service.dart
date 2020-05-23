@@ -5,7 +5,7 @@ import 'package:notetaker/models/note_for_listing.dart';
 import 'package:http/http.dart' as http;
 
 class NoteService {
-  static const API = 'http://api.notes.programmingaddict.com/';
+  static const API = 'http://api.notes.programmingaddict.com';
   static const headers = {"apiKey": "c2492abf-0515-4673-ac2c-5abde7c9b1c7"};
 
   Future<APIResponse<List<NoteForListing>>> getNotesList() {
