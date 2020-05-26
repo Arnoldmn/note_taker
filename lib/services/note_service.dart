@@ -8,7 +8,10 @@ import 'package:notetaker/models/note_inssert.dart';
 
 class NoteService {
   static const API = 'http://api.notes.programmingaddict.com';
-  static const headers = {"apiKey": "c2492abf-0515-4673-ac2c-5abde7c9b1c7"};
+  static const headers = {
+    "apiKey": "c2492abf-0515-4673-ac2c-5abde7c9b1c7",
+    "Content-Type": "application/json"
+  };
 
   Future<APIResponse<List<NoteForListing>>> getNotesList() {
     return http.get(API + '/notes', headers: headers).then((data) {
@@ -45,14 +48,17 @@ class NoteService {
   }
 
   Future<APIResponse<bool>> createNote(NoteInsert item) {
-    return http.post(API + '/notes/', headers: headers, body: item.toJson()).then((data) {
+    return http
+        .post(API + '/notes/',
+            headers: headers, body: json.encode(item.toJson()))
+        .then((data) {
       if (data.statusCode == 201) {
         return APIResponse<bool>(
           data: true,
         );
       }
       return APIResponse<bool>(error: true, errorMessage: 'An error occurred');
-    }).catchError((_) => APIResponse<bool>(
-        error: true, errorMessage: 'An error occurred'));
+    }).catchError((_) =>
+            APIResponse<bool>(error: true, errorMessage: 'An error occurred'));
   }
 }

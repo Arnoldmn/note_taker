@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:notetaker/models/note.dart';
+import 'package:notetaker/models/note_inssert.dart';
 import 'package:notetaker/services/note_service.dart';
 
 class NoteModify extends StatefulWidget {
@@ -82,8 +83,45 @@ class _NoteModifyState extends State<NoteModify> {
                         style: TextStyle(color: Colors.white),
                       ),
                       color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        Navigator.of(context).pop();
+                      onPressed: () async {
+                        if (isEditing) {
+                        } else {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          final note = NoteInsert(
+                              noteTitle: _titleController.text,
+                              noteContent: _contentController.text);
+                          final result = await notesService.createNote(note);
+                          setState(() {
+                            _isLoading = false;
+                          });
+
+                          final title = 'Done';
+                          final text = result.error
+                              ? (result.errorMessage ?? 'An error occurred')
+                              : 'Your note was created';
+
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(title),
+                              content: Text(text),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                )
+                              ],
+                            ),
+                          ).then((data) {
+                            if (result.data) {
+                              Navigator.of(context).pop();
+                            }
+                          });
+                        }
                       },
                     ),
                   )
